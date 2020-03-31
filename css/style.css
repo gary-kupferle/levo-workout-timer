@@ -1,0 +1,79 @@
+@import url(https://fonts.googleapis.com/css?family=Audiowide);
+
+.display-label {
+  display: block;
+  font-family: 'Audiowide', cursive;
+  font-size: 12pt;
+  min-width: 100px;
+  max-width: 100px;
+  margin: 5px;
+  color:#111;
+}
+
+.display input {
+  font-family: 'Audiowide', cursive;
+  display: block;
+  font-size: 20pt;
+  min-width: 100px;
+  max-width: 100px;
+  margin: 5px;
+  color:#111;
+  text-shadow: 3px 2px 0px rgba(0,0,0,.2);
+}
+
+html {
+  font-size: 10px;
+  font-family: 'Open Sans', sans-serif;
+  background-color:  #007acc;
+}
+
+h1 {
+  font-size: 60px;
+  text-align: center;
+  margin: 0;
+  padding: 20px 0;
+  color: #000000;
+  text-shadow: 3px 3px 1px #007acc;
+}
+
+h2 {
+  font-size: 30px;
+  text-align: left;
+  margin: 0;
+  padding: 10px 0;
+  color: #000000;
+  text-shadow: 2px 2px 1px #007acc;
+}
+
+p, li {
+  font-size: 20px;
+  text-align: left;
+  line-height: 2;
+}
+
+body {
+  width: 600px;
+  min-height: 300px;
+  margin: 30px auto;
+  background-color: #FFFFFF;
+  padding: 20px 20px 20px 20px;
+  border: 5px solid black;
+}
+
+.button {
+  background-color: #007acc;
+  border: none;
+  color: white;
+  padding: 20px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px 5px;
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  margin: 0 auto;
+}
