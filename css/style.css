@@ -1,5 +1,38 @@
 @import url(https://fonts.googleapis.com/css?family=Audiowide);
 
+.round-display input {
+  font-family: 'Audiowide', cursive;
+  display: block;
+  font-size: 40pt;
+  min-width: 75px;
+  max-width: 75px;
+  margin: 5px;
+  color:#007acc;
+  text-shadow: 3px 2px 0px rgba(0,0,0,.2);
+}
+
+.colon-display {
+  font-family: 'Audiowide', cursive;
+  display: block;
+  font-size: 40pt;
+  min-height: 70px;
+  padding-top: 25px;
+  margin: 5px;
+  color:#111;
+  text-shadow: 3px 2px 0px rgba(0,0,0,.2);
+}
+
+.time-display input {
+  font-family: 'Audiowide', cursive;
+  display: block;
+  font-size: 40pt;
+  min-width: 100px;
+  max-width: 100px;
+  margin: 5px;
+  color:#111;
+  text-shadow: 3px 2px 0px rgba(0,0,0,.2);
+}
+
 .display-label {
   display: block;
   font-family: 'Audiowide', cursive;
@@ -53,7 +86,7 @@ p, li {
 
 body {
   width: 600px;
-  min-height: 300px;
+  min-height: 325px;
   margin: 30px auto;
   background-color: #FFFFFF;
   padding: 20px 20px 20px 20px;
@@ -63,6 +96,7 @@ body {
 .button {
   background-color: #007acc;
   border: none;
+  border-radius: 10px;
   color: white;
   padding: 20px 32px;
   text-align: center;
