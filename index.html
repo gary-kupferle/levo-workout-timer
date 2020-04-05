@@ -19,32 +19,32 @@
             <label class="display-label" for="rounds">Rounds</label>
             <input type="number" id="rounds" value="1" min="0" step="1"/>
         </div>
-        <div class="time-display" style="float:left">
+        <div class="run-time-display" style="float:left">
             <label class="display-label" for="minutes">Minutes</label>
-            <input type="number" id="minutes" value="0" min="0" max="60"/>
+            <input type="number" id="minutes" value="00" defaultValue="00" min="00" max="60"/>
         </div>
         <div class="colon-display" style="float:left">
             <label>:</label>
         </div>
-        <div class="time-display" style="float:left;margin-right: 50px;">
+        <div class="run-time-display" style="float:left">
             <label class="display-label" for="seconds">Seconds</label>
-            <input type="number" id="seconds" value="0" min="0" max="60"/>
+            <input type="number" id="seconds" value="00" min="00" max="60"/>
         </div>
     </div>
     <div style="float:left;margin-right: 425px;">
         <button onclick="runIntervalTimer()" type="button" class="button">Start</button>
     </div>
     <div id="restBetweenRounds">
-        <div class="display" style="float:left">
+        <div style="float:left">
             <label class="display-label">Rest Between Rounds</label>
         </div>
-        <div class="display" style="float:left">
+        <div class="rest-time-display" style="float:left">
             <label class="display-label" for="restMinutes">Minutes</label>
-            <input type="number" id="restMinutes" value="0" min="0" max="60"/>
+            <input type="number" id="restMinutes" value="00" min="00" max="60"/>
         </div>
-        <div class="display" style="float:left;margin-right: 100px;">
+        <div class="rest-time-display" style="float:left;margin-right: 100px;">
             <label class="display-label" for="restSeconds">Seconds</label>
-            <input type="number" id="restSeconds" value="0" min="0" max="60"/>
+            <input type="number" id="restSeconds" value="00" min="00" max="60"/>
         </div>
     </div>
 </div>
@@ -63,37 +63,32 @@
   }
 
   function setupNewRound(minutes, minutesPerRound, seconds, secondsPerRound, rounds, timerState) {
-    minutes.value = minutesPerRound;
-    seconds.value = secondsPerRound;
+    minutes.value = normalizeDisplayMinutes(minutesPerRound);
+    seconds.value = normalizeDisplaySeconds(secondsPerRound);
     rounds.value = rounds.value - 1;
 
     let countdownAmount = (1000 * 60 * minutesPerRound) + (1000 * secondsPerRound) + 1000;
     let now = new Date().getTime();
     timerState.countdownTo = now + countdownAmount;
     timerState.inRestPeriod = false;
-
-    console.log("setupNewRound -- timerState.inRestPeriod = " + timerState.inRestPeriod);
   }
 
   function completeTimer(timerInterval, minutes, minutesPerRound, seconds, secondsPerRound, rounds) {
     clearInterval(timerInterval);
-    minutes.value = minutesPerRound;
-    seconds.value = secondsPerRound;
+    minutes.value = normalizeDisplayMinutes(minutesPerRound);
+    seconds.value = normalizeDisplaySeconds(secondsPerRound);
     rounds.value = rounds.value - 1;
   }
 
-
   function setupNewRestPeriod(restMinutes, minutesPerRest, restSeconds, secondsPerRest, timerState) {
 
-    restMinutes.value = minutesPerRest;
-    restSeconds.value = secondsPerRest;
+    restMinutes.value = normalizeDisplayMinutes(minutesPerRest);
+    restSeconds.value = normalizeDisplaySeconds(secondsPerRest);
 
     let countdownAmount = (1000 * 60 * minutesPerRest) + (1000 * secondsPerRest) + 1000;
     let now = new Date().getTime();
     timerState.countdownTo = now + countdownAmount;
     timerState.inRestPeriod = true;
-    console.log("setupNewRestPeriod -- timerState.inRestPeriod = " + timerState.inRestPeriod);
-    console.log("setupNewRestPeriod -- timerState.countdownTo = " + timerState.countdownTo);
   }
 
   function isRoundValueValid(rounds) {
@@ -102,7 +97,7 @@
       return false;
     }
     rounds.value = parseInt(rounds.value);
-    rounds.style.color = "007acc";
+    rounds.style.color = "#007acc";
     return true;
   }
 
@@ -120,6 +115,15 @@
     return true;
   }
 
+  function normalizeDisplayMinutes(minutes) {
+    let displayRestMinutes = Math.floor((minutes % (1000 * 60 * 60)) / (1000 * 60)).toString();
+    return displayRestMinutes < 10 ? ("0" + displayRestMinutes.toString()) : displayRestMinutes.toString();
+  }
+
+  function normalizeDisplaySeconds(seconds) {
+    let displayRestSeconds = Math.floor((seconds % (1000 * 60)) / 1000);
+    return displayRestSeconds < 10 ? ("0" + displayRestSeconds.toString()) : displayRestSeconds.toString();
+  }
 
   function runIntervalTimer() {
     const rounds = document.getElementById("rounds");
@@ -156,32 +160,30 @@
 
       // Time calculations for days, hours, minutes and seconds
       if (!timerState.inRestPeriod) {
-        minutes.value = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString();
-        seconds.value = Math.floor((distance % (1000 * 60)) / 1000).toString();
+        minutes.value = normalizeDisplayMinutes(distance);
+        seconds.value = normalizeDisplaySeconds(distance);
       } else {
-        restMinutes.value = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString();
-        restSeconds.value = Math.floor((distance % (1000 * 60)) / 1000).toString();
+        restMinutes.value = normalizeDisplayMinutes(distance);
+        restSeconds.value = normalizeDisplaySeconds(distance);
       }
 
       // If the count down is over
       if (distance < 1050) {
         playAudio();
         if (!timerState.inRestPeriod && rounds.value > 1) {
-          console.log("countdownAmount " + countdownAmount.toString());
           if (restMinutesPerRound > 0 || restSecondsPerRound > 0) {
             setupNewRestPeriod(restMinutes, restMinutesPerRound, restSeconds, restSecondsPerRound, timerState);
-            minutes.value = 0;
-            seconds.value = 0;
+            minutes.value = "00";
+            seconds.value = "00";
           } else {
             setupNewRound(minutes, minutesPerRound, seconds, secondsPerRound, rounds, timerState);
-            restMinutes.value = 0;
-            restSeconds.value = 0;
+            restMinutes.value = "00";
+            restSeconds.value = "00";
           }
-          console.log("runInterval/if -- timerState.inRestPeriod = " + timerState.inRestPeriod);
         } else if (timerState.inRestPeriod) {
           setupNewRound(minutes, minutesPerRound, seconds, secondsPerRound, rounds, timerState);
-          restMinutes.value = 0;
-          restSeconds.value = 0;
+          restMinutes.value = "00";
+          restSeconds.value = "00";
           timerState.inRestPeriod = false;
 
         } else if (rounds.value <= 1) {
@@ -191,35 +193,6 @@
     }, 100);
   }
 
-
-  function runRestTimer() {
-    const restMinutesPerRound = restMinutes.value;
-    const restSecondsPerRound = restSeconds.value;
-
-    let countdownAmount = (1000 * 60 * restMinutesPerRound) + (1000 * restSecondsPerRound) + 1000;
-    let now = new Date().getTime();
-    let countdownTo = now + countdownAmount;
-
-    // Update the count down every 0.1 second
-    let restTimerInterval = setInterval(function () {
-      let now = new Date().getTime();
-
-      // Find the distance between now and the count down date
-      let distance = countdownTo - now;
-
-      // Time calculations for days, hours, minutes and seconds
-      restMinutes.value = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString();
-      restSeconds.value = Math.floor((distance % (1000 * 60)) / 1000).toString();
-
-      // If the count down is over, write some text
-      if (distance < 1050) {
-        playAudio();
-        clearInterval(restTimerInterval);
-        restMinutes.value = restMinutesPerRound;
-        restSeconds.value = restSecondsPerRound;
-      }
-    }, 100);
-  }
 </script>
 
 </body>

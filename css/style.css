@@ -4,8 +4,8 @@
   font-family: 'Audiowide', cursive;
   display: block;
   font-size: 40pt;
-  min-width: 75px;
-  max-width: 75px;
+  min-width: 90px;
+  max-width: 90px;
   margin: 5px;
   color:#007acc;
   text-shadow: 3px 2px 0px rgba(0,0,0,.2);
@@ -22,12 +22,12 @@
   text-shadow: 3px 2px 0px rgba(0,0,0,.2);
 }
 
-.time-display input {
+.run-time-display input {
   font-family: 'Audiowide', cursive;
   display: block;
   font-size: 40pt;
-  min-width: 100px;
-  max-width: 100px;
+  min-width: 125px;
+  max-width: 125px;
   margin: 5px;
   color:#111;
   text-shadow: 3px 2px 0px rgba(0,0,0,.2);
@@ -43,7 +43,7 @@
   color:#111;
 }
 
-.display input {
+.rest-time-display input {
   font-family: 'Audiowide', cursive;
   display: block;
   font-size: 20pt;
