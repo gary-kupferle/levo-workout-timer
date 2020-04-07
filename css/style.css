@@ -1,113 +1,140 @@
 @import url(https://fonts.googleapis.com/css?family=Audiowide);
 
 .round-display input {
-  font-family: 'Audiowide', cursive;
-  display: block;
-  font-size: 40pt;
-  min-width: 90px;
-  max-width: 90px;
-  margin: 5px;
-  color:#007acc;
-  text-shadow: 3px 2px 0px rgba(0,0,0,.2);
+    font-family: 'Audiowide', cursive;
+    display: block;
+    font-size: 70pt;
+    min-width: 150px;
+    max-width: 150px;
+    margin: 5px;
+    color: #007acc;
+    text-shadow: 3px 2px 0px rgba(0, 0, 0, .2);
 }
 
 .colon-display {
-  font-family: 'Audiowide', cursive;
-  display: block;
-  font-size: 40pt;
-  min-height: 70px;
-  padding-top: 25px;
-  margin: 5px;
-  color:#111;
-  text-shadow: 3px 2px 0px rgba(0,0,0,.2);
+    font-family: 'Audiowide', cursive;
+    display: block;
+    font-size: 70pt;
+    min-height: 70px;
+    padding-top: 25px;
+    margin: 5px;
+    color: #111;
+    text-shadow: 3px 2px 0px rgba(0, 0, 0, .2);
 }
 
 .run-time-display input {
-  font-family: 'Audiowide', cursive;
-  display: block;
-  font-size: 40pt;
-  min-width: 125px;
-  max-width: 125px;
-  margin: 5px;
-  color:#111;
-  text-shadow: 3px 2px 0px rgba(0,0,0,.2);
+    font-family: 'Audiowide', cursive;
+    display: block;
+    font-size: 70pt;
+    min-width: 200px;
+    max-width: 200px;
+    margin: 5px;
+    color: #111;
+    text-shadow: 3px 2px 0px rgba(0, 0, 0, .2);
 }
 
 .display-label {
-  display: block;
-  font-family: 'Audiowide', cursive;
-  font-size: 12pt;
-  min-width: 100px;
-  max-width: 100px;
-  margin: 5px;
-  color:#111;
+    display: block;
+    font-family: 'Audiowide', cursive;
+    font-size: 12pt;
+    min-width: 100px;
+    max-width: 100px;
+    margin: 5px;
+    color: #111;
 }
 
 .rest-time-display input {
-  font-family: 'Audiowide', cursive;
-  display: block;
-  font-size: 20pt;
-  min-width: 100px;
-  max-width: 100px;
-  margin: 5px;
-  color:#111;
-  text-shadow: 3px 2px 0px rgba(0,0,0,.2);
+    font-family: 'Audiowide', cursive;
+    display: block;
+    font-size: 20pt;
+    min-width: 100px;
+    max-width: 100px;
+    margin: 5px;
+    color: #111;
+    text-shadow: 3px 2px 0px rgba(0, 0, 0, .2);
 }
 
 html {
-  font-size: 10px;
-  font-family: 'Open Sans', sans-serif;
-  background-color:  #007acc;
+    font-size: 10px;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #007acc;
 }
 
 h1 {
-  font-size: 60px;
-  text-align: center;
-  margin: 0;
-  padding: 20px 0;
-  color: #000000;
-  text-shadow: 3px 3px 1px #007acc;
+    font-size: 60px;
+    text-align: center;
+    margin: 0;
+    padding: 20px 0;
+    color: #000000;
+    text-shadow: 3px 3px 1px #007acc;
 }
 
 h2 {
-  font-size: 30px;
-  text-align: left;
-  margin: 0;
-  padding: 10px 0;
-  color: #000000;
-  text-shadow: 2px 2px 1px #007acc;
+    font-size: 30px;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    color: #000000;
+    text-shadow: 2px 2px 1px #007acc;
 }
 
 p, li {
-  font-size: 20px;
-  text-align: left;
-  line-height: 2;
+    font-size: 20px;
+    text-align: left;
+    line-height: 2;
 }
 
 body {
-  width: 600px;
-  min-height: 325px;
-  margin: 30px auto;
-  background-color: #FFFFFF;
-  padding: 20px 20px 20px 20px;
-  border: 5px solid black;
+    width: 633px;
+    min-height: 375px;
+    margin: 30px auto;
+    background-color: #FFFFFF;
+    padding: 20px 20px 20px 20px;
+    border: 5px solid black;
 }
 
 .button {
-  background-color: #007acc;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  padding: 20px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 10px 5px;
-  cursor: pointer;
+    background-color: #007acc;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    padding: 20px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 5px;
+    cursor: pointer;
 }
 
 img {
-  display: block;
-  margin: 0 auto;
+    display: block;
+    margin: 5px 40px auto auto;
+}
+
+.container input {
+    font-family: 'Audiowide', cursive;
+}
+
+.radio-layout {
+    margin: 30px 5px;
+}
+
+.radio-label {
+    font-family: 'Audiowide', cursive;
+    font-size: 12pt;
+}
+
+input[type='radio']:checked:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -2px;
+    background-color: #007acc;
+    position: relative;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 1px solid black;
 }
