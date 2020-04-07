@@ -10,12 +10,11 @@
 </head>
 <body>
 <div>
-    <img src="./images/levo-logo.png" alt="CrossFit Levo Logo" width="25%" height="25%" align="right">
     <h2>Raising Bars, Lifting Spirits</h2>
 </div>
 <div>
     <div>
-        <div class="round-display" style="float:left">
+        <div class="round-display" id="round-display-div" style="float:left">
             <label class="display-label" for="rounds">Rounds</label>
             <input type="number" id="rounds" value="1" min="0" step="1"/>
         </div>
@@ -31,9 +30,20 @@
             <input type="number" id="seconds" value="00" min="00" max="60"/>
         </div>
     </div>
-    <div style="float:left;margin-right: 425px;">
-        <button onclick="runIntervalTimer()" type="button" class="button">Start</button>
+    <div style="float:left">
+        <div style="float:left;margin-right: 44px">
+            <button onclick="runTimer()" type="button" id="startButton" class="button">Start</button>
+        </div>
+        <div class="radio-layout" style="float:left;margin-right: 20px">
+            <input type="radio" id="stopwatch" name="timerType" value="stopwatch">
+            <label class="radio-label" for="stopwatch">Stopwatch</label>
+        </div>
+        <div class="radio-layout" style="float:left;margin-right: 20px">
+            <input type="radio" id="interval" name="timerType" value="interval">
+            <label class="radio-label" for="interval">Interval</label>
+        </div>
     </div>
+    <img src="./images/levo-logo.png" alt="CrossFit Levo Logo" width="25%" height="25%" align="right" ;>
     <div id="restBetweenRounds">
         <div style="float:left">
             <label class="display-label">Rest Between Rounds</label>
@@ -42,7 +52,7 @@
             <label class="display-label" for="restMinutes">Minutes</label>
             <input type="number" id="restMinutes" value="00" min="00" max="60"/>
         </div>
-        <div class="rest-time-display" style="float:left;margin-right: 100px;">
+        <div class="rest-time-display" style="float:left;margin-right: 50px;">
             <label class="display-label" for="restSeconds">Seconds</label>
             <input type="number" id="restSeconds" value="00" min="00" max="60"/>
         </div>
@@ -60,6 +70,39 @@
 
   function playAudio() {
     audioAlarm.play();
+  }
+
+  let stopWatchInterval;
+
+  function runStopwatch() {
+    if (stopWatchInterval) {
+      document.getElementById("startButton").innerText = "Start";
+      clearInterval(stopWatchInterval);
+      stopWatchInterval = null;
+      return;
+    }
+
+    const minutes = document.getElementById("minutes");
+    const seconds = document.getElementById("seconds");
+    document.getElementById("startButton").innerText = "Stop";
+    document.getElementById("restBetweenRounds").style.display = "none";
+    document.getElementById("round-display-div").style.display = "none";
+
+    const startTime = new Date().getTime() - ((1000 * 60 * minutes.value) + (1000 * seconds.value));
+
+    stopWatchInterval = setInterval(function () {
+      let distance = (new Date().getTime()) - startTime;
+      minutes.value = normalizeDisplayMinutes(distance);
+      seconds.value = normalizeDisplaySeconds(distance);
+    }, 100);
+  }
+
+  function runTimer() {
+    if (document.getElementById("stopwatch").checked) {
+      runStopwatch();
+    } else if (document.getElementById("interval").checked) {
+      runIntervalTimer();
+    }
   }
 
   function setupNewRound(minutes, minutesPerRound, seconds, secondsPerRound, rounds, timerState) {
