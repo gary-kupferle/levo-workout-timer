@@ -3,7 +3,6 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
     <title>CrossFit Levo Workout Timer</title>
     <link href="css/css.css" rel="stylesheet" type="text/css">
     <link href="./css/style.css" rel="stylesheet" type="text/css">
@@ -29,21 +28,30 @@
             <label class="display-label" for="seconds">Seconds</label>
             <input type="number" id="seconds" value="00" min="00" max="60"/>
         </div>
+        <div style="float:right;">
+            <img src="./images/levo-logo.png" alt="CrossFit Levo Logo" width=160px height=175px align="right" ;>
+        </div>
     </div>
-    <div style="float:left">
+    <div style="float:left;min-width: 375px">
         <div style="float:left;margin-right: 44px">
             <button onclick="runTimer()" type="button" id="startButton" class="button">Start</button>
         </div>
-        <div class="radio-layout" style="float:left;margin-right: 20px">
-            <input type="radio" id="stopwatch" name="timerType" value="stopwatch">
-            <label class="radio-label" for="stopwatch">Stopwatch</label>
+        <div class="radio-layout" style="float:left;">
+            <div style="float:left;margin-top: 22px; min-width: 160px">
+                <input type="radio" id="stopwatch" name="timerType" value="stopwatch" checked/>
+                <label class="radio-label" for="stopwatch">Stopwatch</label>
+            </div>
+            <br>
+            <div style="float:left;margin-right: 10px; min-width: 160px">
+                <input type="radio" id="interval" name="timerType" value="interval"/>
+                <label class="radio-label" for="interval">Interval</label>
+            </div>
         </div>
-        <div class="radio-layout" style="float:left;margin-right: 20px">
-            <input type="radio" id="interval" name="timerType" value="interval">
-            <label class="radio-label" for="interval">Interval</label>
+        <div style="float:left;">
+            <button onclick="reset()" type="button" id="resetButton" class="smallButton">&#x27f2</button>
         </div>
     </div>
-    <img src="./images/levo-logo.png" alt="CrossFit Levo Logo" width="25%" height="25%" align="right" ;>
+
     <div id="restBetweenRounds">
         <div style="float:left">
             <label class="display-label">Rest Between Rounds</label>
@@ -103,6 +111,12 @@
     } else if (document.getElementById("interval").checked) {
       runIntervalTimer();
     }
+  }
+
+  function reset() {
+    document.getElementById("rounds").value = 1;
+    document.getElementById("minutes").value = "00";
+    document.getElementById("seconds").value = "00";
   }
 
   function setupNewRound(minutes, minutesPerRound, seconds, secondsPerRound, rounds, timerState) {
