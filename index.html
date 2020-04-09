@@ -36,18 +36,18 @@
         <div style="float:left;margin-right: 44px">
             <button onclick="runTimer()" type="button" id="startButton" class="button">Start</button>
         </div>
-        <div class="radio-layout" style="float:left;">
+        <div class="radio-layout" id="timeTypeId" style="float:left;">
             <div style="float:left;margin-top: 22px; min-width: 160px">
                 <input type="radio" id="stopwatch" name="timerType" value="stopwatch" checked/>
                 <label class="radio-label" for="stopwatch">Stopwatch</label>
             </div>
             <br>
             <div style="float:left;margin-right: 10px; min-width: 160px">
-                <input type="radio" id="interval" name="timerType" value="interval"/>
+                <input type="radio" id="interval" onclick="showIntervalFields()" name="timerType" value="interval"/>
                 <label class="radio-label" for="interval">Interval</label>
             </div>
         </div>
-        <div style="float:left;">
+        <div style="float:left;margin-right: 20px">
             <button onclick="reset()" type="button" id="resetButton" class="smallButton">&#x27f2</button>
         </div>
     </div>
@@ -68,19 +68,37 @@
 </div>
 
 <audio id="audio-alarm">
-    <source src="audio/alert.mp3" type="audio/mp3">
+    <source src="audio/3-rings-boxing-bell.wav" type="audio/wav">
+    Your browser does not support the audio element.
+</audio>
+<audio id="10-second-warning">
+    <source src="audio/3-thumps.mp3" type="audio/mp3">
     Your browser does not support the audio element.
 </audio>
 
 
 <script>
   let audioAlarm = document.getElementById("audio-alarm");
+  let audioTenSecondWarning = document.getElementById("10-second-warning");
 
-  function playAudio() {
+  function playRoundStartEnd() {
     audioAlarm.play();
+  }
+  function playTenSecondWarning() {
+    audioTenSecondWarning.play();
   }
 
   let stopWatchInterval;
+
+  function hideIntervalFields() {
+    document.getElementById("round-display-div").style.display = "none";
+    document.getElementById("restBetweenRounds").style.visibility = "hidden";
+  }
+
+  function showIntervalFields() {
+    document.getElementById("round-display-div").style.display = "block";
+    document.getElementById("restBetweenRounds").style.visibility = "visible";
+  }
 
   function runStopwatch() {
     if (stopWatchInterval) {
@@ -93,8 +111,7 @@
     const minutes = document.getElementById("minutes");
     const seconds = document.getElementById("seconds");
     document.getElementById("startButton").innerText = "Stop";
-    document.getElementById("restBetweenRounds").style.display = "none";
-    document.getElementById("round-display-div").style.display = "none";
+    hideIntervalFields();
 
     const startTime = new Date().getTime() - ((1000 * 60 * minutes.value) + (1000 * seconds.value));
 
@@ -106,6 +123,7 @@
   }
 
   function runTimer() {
+    document.getElementById("timeTypeId").style.display = "none";
     if (document.getElementById("stopwatch").checked) {
       runStopwatch();
     } else if (document.getElementById("interval").checked) {
@@ -114,6 +132,8 @@
   }
 
   function reset() {
+    showIntervalFields();
+    document.getElementById("timeTypeId").style.display = "block";
     document.getElementById("rounds").value = 1;
     document.getElementById("minutes").value = "00";
     document.getElementById("seconds").value = "00";
@@ -224,9 +244,14 @@
         restSeconds.value = normalizeDisplaySeconds(distance);
       }
 
+      if (minutesPerRound >= 1 && distance < 16150 && distance > 15950) {
+        // Current sound byte for 10 second warning has ~ 5 seconds of dead time
+        playTenSecondWarning();
+      }
+
       // If the count down is over
       if (distance < 1050) {
-        playAudio();
+        playRoundStartEnd();
         if (!timerState.inRestPeriod && rounds.value > 1) {
           if (restMinutesPerRound > 0 || restSecondsPerRound > 0) {
             setupNewRestPeriod(restMinutes, restMinutesPerRound, restSeconds, restSecondsPerRound, timerState);
